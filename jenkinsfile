@@ -32,19 +32,19 @@ pipeline {
                 }
             }
         }
+
         stage('Terraform Apply') {
             steps {
                 script {
                     // Apply Terraform changes
                     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                        sh 'terraform apply -auto-approve '  // Apply the Terraform plan automatically
+                        sh 'terraform apply -auto-approve'  // Apply the Terraform plan automatically
                     }
                 }
             }
-
         }
 
- stage('Run Ansible Playbook') {
+        stage('Run Ansible Playbook') {
             steps {
                 script {
                     // Run the Ansible playbook using SSH credentials
@@ -53,13 +53,18 @@ pipeline {
                                                        passphraseVariable: 'password', 
                                                        usernameVariable: 'username')]) {
                        
+                        // Ensure correct permissions for private key
+                        sh 'chmod 600 ${private-key}'  // Set proper permissions for the private key
+
+                        // Run Ansible playbook with the private key and user credentials
                         sh """
-                            ansible-playbook   playbook.yml
+                            ansible-playbook -i inventory_file -u ${username} --private-key ${private-key} playbook.yml
                         """
                     }
                 }
             }
- }
+        }
+    }
 
     post {
         always {
