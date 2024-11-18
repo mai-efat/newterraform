@@ -1,6 +1,6 @@
 ---
 - name: Install Apache HTTPD on CentOS/RHEL
-  hosts:  all # Replace with your group or IP
+  hosts: my_ec2  # Replace with your group or IP
   become: yes  # Run as root
   tasks:
     - name: Install httpd package
