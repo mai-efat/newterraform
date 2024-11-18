@@ -22,16 +22,22 @@ pipeline {
             }
         }
 
+        stage('Terraform Plan') {
+            steps {
+                script {
+                    // Generate Terraform execution plan
+                    withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                        sh 'terraform plan'  // Show the execution plan
+                    }
+                }
+            }
+        }
         stage('Terraform Apply') {
             steps {
                 script {
-                    // Apply Terraform
+                    // Apply Terraform changes
                     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-<<<<<<< HEAD
-                        sh 'terraform apply -autoapprove'
-=======
-                        sh 'terraform plan'
->>>>>>> 60ad6250bd26bebfd7efd64e43e276b81ad737f4
+                        sh 'terraform apply --autoapprove'  // Apply the Terraform plan automatically
                     }
                 }
             }
