@@ -49,7 +49,7 @@ pipeline {
                 script {
                     // Run the Ansible playbook using SSH credentials
                     withCredentials([sshUserPrivateKey(credentialsId: 'agent', 
-                                                       keyFileVariable: 'private-key', 
+                                                       keyFileVariable: 'privatekey', 
                                                        passphraseVariable: 'password', 
                                                        usernameVariable: 'username')]) {
                        
@@ -58,7 +58,7 @@ pipeline {
 
                         // Run Ansible playbook with the private key and user credentials
                         sh """
-                            ansible-playbook -i inventory_file -u ${username} --private-key ${private-key} playbook.yaml
+                            ansible-playbook -i inventory_file -u ${username} --private-key ${privatekey} playbook.yaml
                         """
                     }
                 }
