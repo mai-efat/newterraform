@@ -54,11 +54,11 @@ pipeline {
                                                        usernameVariable: 'username')]) {
                        
                         // Ensure correct permissions for private key
-                        sh 'chmod 600 ${private-key}'  // Set proper permissions for the private key
+                    
 
                         // Run Ansible playbook with the private key and user credentials
                         sh """
-                            ansible-playbook -i inventory_file -u ${username} --private-key ${privatekey} playbook.yaml
+                            ansible-playbook -i inventory_file -u ${username} playbook.yaml
                         """
                     }
                 }
