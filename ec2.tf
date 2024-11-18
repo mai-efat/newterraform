@@ -30,6 +30,10 @@ resource "aws_instance" "myec2" {
   tags = {
     Name = "ec2-created-from-terraform"
   }
+  provisioner "local-exec" {
+    command = "echo $ {}   >> inventory.ini"
+    
+  }
 
   # Ignore changes to specific attributes
   lifecycle {
