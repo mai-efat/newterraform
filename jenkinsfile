@@ -41,8 +41,25 @@ pipeline {
                     }
                 }
             }
+
         }
-    }
+
+ stage('Run Ansible Playbook') {
+            steps {
+                script {
+                    // Run the Ansible playbook using SSH credentials
+                    withCredentials([sshUserPrivateKey(credentialsId: 'agent', 
+                                                       keyFileVariable: 'private-key', 
+                                                       passphraseVariable: 'password', 
+                                                       usernameVariable: 'username')]) {
+                       
+                        sh """
+                            ansible-playbook   playbook.yml
+                        """
+                    }
+                }
+            }
+ }
 
     post {
         always {
