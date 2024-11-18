@@ -1,0 +1,26 @@
+# Ignore Terraform state files
+*.tfstate
+*.tfstate.*
+.aws/credentials
+# Ignore backup files
+*.tfvars.backup
+*.tfplan
+
+# Ignore the .terraform directory (this is where Terraform stores its provider plugins)
+.terraform/
+
+# Ignore crash logs
+crash.log
+
+# Ignore override files (these are used to override configurations locally)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore sensitive files such as terraform.tfvars (which may contain secrets)
+terraform.tfvars
+terraform.tfvars.json
+
+# Ignore the .terraform.lock.hcl file (this can be rebuilt by Terraform)
+.terraform.lock.hcl
