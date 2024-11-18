@@ -58,7 +58,7 @@ pipeline {
 
                         // Run Ansible playbook with the private key and user credentials
                         sh """
-                            ansible-playbook -i inventory_file -u ${username} --private-key ${private-key} playbook.yml
+                            ansible-playbook -i inventory_file -u ${username} --private-key ${private-key} playbook.yaml
                         """
                     }
                 }
