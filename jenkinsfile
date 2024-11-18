@@ -1,4 +1,4 @@
-
+pipeline {
     agent any
 
     stages {
@@ -6,8 +6,7 @@
             steps {
                 script {
                     // Clone the Git repository
-                   
-                git branch: 'main', url: 'https://github.com/mai-efat/newterraform.git'
+                    git branch: 'main', url: 'https://github.com/mai-efat/newterraform.git'
                 }
             }
         }
@@ -15,12 +14,9 @@
         stage('Terraform Init') {
             steps {
                 script {
-                    // Ensure we are in the cloned directory
-                    dir('terraformjenkins') {
-                        // Initialize Terraform
-                        withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                            sh 'terraform init'  // Initialize Terraform
-                        }
+                    // Initialize Terraform
+                    withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                        sh 'terraform init'  // Initialize Terraform
                     }
                 }
             }
@@ -29,12 +25,9 @@
         stage('Terraform Apply') {
             steps {
                 script {
-                    // Ensure we are in the correct directory
-                    dir('terraformjenkins') {
-                        // Apply Terraform
-                        withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                            sh 'terraform apply --autoapprove'
-                        }
+                    // Apply Terraform
+                    withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                        sh 'terraform apply --autoapprove'
                     }
                 }
             }
@@ -47,4 +40,3 @@
         }
     }
 }
-
