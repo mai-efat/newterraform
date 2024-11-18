@@ -47,8 +47,10 @@ resource "aws_instance" "myec2" {
 
   # Local-exec provisioner to create an inventory.ini file with EC2 IP
   provisioner "local-exec" {
-    command = "echo ${aws_instance.myec2.public_ip}>> inventory.ini"
-  }
+  
+  command = "echo [my_ec2] > inventory.ini && echo ${aws_instance.myec2.public_ip} >> inventory.ini"
+
+}
 }
 
 
