@@ -4,7 +4,7 @@
   become: yes  # Run as root
   tasks:
     - name: Install httpd package
-      yum:
+      dnf:
         name: httpd
         state: present
        
