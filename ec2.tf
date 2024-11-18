@@ -1,3 +1,6 @@
+provider "aws" {
+  region = "eu-north-1"  # Replace with the region of your choice
+}
 
 terraform {
   required_providers {
